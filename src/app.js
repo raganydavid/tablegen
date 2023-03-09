@@ -107,6 +107,23 @@ function generateTdEdit(fruit) {
     return td;
 }
 
+function createFruit(fruit) {
+    let endpoint = 'fruits';
+    let url = host + endpoint;
+
+    fetch(url, {
+        method: 'post',
+        body: JSON.stringify(fruit),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log(result)
+    });
+}
+
 saveButton.addEventListener('click', () => {
     
     let name =  nameInput.value;
@@ -117,10 +134,12 @@ saveButton.addEventListener('click', () => {
         quantity: quantity, 
         price: price
     };
-    gyumolcsok.push(gyumolcs);
-    console.log(gyumolcsok);
+
+    createFruit(gyumolcs);
+
+    // gyumolcsok.push(gyumolcs);
     tbody.textContent = '';
-    generateTbody();
+    getFruits();
     clearFieldOnAddModal();
 });
 
@@ -129,9 +148,6 @@ function clearFieldOnAddModal() {
     quantityInput.value = '';
     priceInput.value = '';
 }
-
-
-
 
 
 saveEditButton.addEventListener('click', () => {
